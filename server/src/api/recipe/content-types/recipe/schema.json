@@ -18,17 +18,21 @@
       "required": false,
       "allowedTypes": [
         "images"
-      ]
+      ],
+      "pluginOptions": {}
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {}
     },
     "timeToPrepare": {
       "type": "integer",
-      "min": 0
+      "min": 0,
+      "pluginOptions": {}
     },
-    "description": {
-      "type": "text"
+    "directions": {
+      "type": "text",
+      "pluginOptions": {}
     },
     "tools": {
       "type": "relation",
@@ -44,7 +48,20 @@
         " 3",
         " 4",
         " 5"
-      ]
+      ],
+      "pluginOptions": {}
+    },
+    "ingredients": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::ingredient.ingredient",
+      "inversedBy": "recipes"
+    },
+    "likes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::like.like",
+      "mappedBy": "recipe"
     }
   }
 }
