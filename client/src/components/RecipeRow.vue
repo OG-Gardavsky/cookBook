@@ -1,8 +1,20 @@
 <template>
-  <div class="d-flex flex-row">
-    <div>{{recipe.attributes.title}} </div>
-    <div>{{recipe.attributes.difficulty}}</div>
-  </div>
+  <router-link :to="`/recipeDetail?id=${recipe.id}`">
+    <div class="
+      recipe
+      container
+      d-flex
+      flex-row
+      border-bottom
+      justify-content-between
+  ">
+      <img class="img-fluid  w-25" :src="'http://localhost:1337/uploads/full_v_recept733_b3d8cb05d7.jpg'"/>
+      <div>{{recipe.attributes.title}} </div>
+      <div>{{recipe.attributes.difficulty}}</div>
+      <div>{{recipe.attributes.timeToPrepare}} min.</div>
+      <div>{{recipe.attributes.difficulty}}</div>
+    </div>
+  </router-link>
 </template>
 
 <script>
@@ -15,5 +27,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .recipe > * {
+    padding: 5px;
+  }
 </style>

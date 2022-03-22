@@ -2,14 +2,15 @@
   <div class="home d-flex flex-column">
     <TopBar />
     <h1>Cook book for 42nd century</h1>
-    <b-button @click="getRecipes">Button</b-button>
+    <div>
+      <b-button @click="getRecipes">Button</b-button>
+    </div>
+
 
     <b-overlay
         :show="busy"
-        rounded
         opacity="0.6"
-        spinner-variant="primary"
-        class="d-inline-block"
+        spinner-variant="secondary"
     >
       <recipe-row v-for="recipe in recipes" :recipe="recipe"/>
 
@@ -41,12 +42,10 @@ export default {
         const res = await axios.get('/api/recipes?populate=*')
         this.recipes = res.data.data
         this.busy = false
-        console.log(this.recipes)
 
       } catch(err) {
         console.log(err)
       }
-
     }
   },
   created() {
