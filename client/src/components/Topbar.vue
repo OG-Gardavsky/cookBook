@@ -1,10 +1,12 @@
 <template>
   <div>
     <b-navbar class="navBar" toggleable="lg" type="dark">
-      <b-navbar-brand href="#">
-        <font-awesome-icon icon="fa-solid fa-utensils" />
-        CookBook
-      </b-navbar-brand>
+      <router-link to="/" class="text-decoration-none">
+        <b-navbar-brand>
+          <font-awesome-icon icon="fa-solid fa-utensils" />
+          CookBook
+        </b-navbar-brand>
+      </router-link>
     </b-navbar>
   </div>
 </template>

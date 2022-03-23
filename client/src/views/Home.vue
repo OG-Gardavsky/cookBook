@@ -1,7 +1,8 @@
 <template>
   <div class="home d-flex flex-column">
     <TopBar />
-    <h1>Cook book for 42nd century</h1>
+    <h1 class="m-5 border-bottom  p-2">Cook book for 42nd century</h1>
+
     <div>
       <b-button @click="getRecipes">Button</b-button>
     </div>
