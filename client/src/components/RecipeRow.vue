@@ -1,10 +1,10 @@
 <template>
   <router-link
     class="recipe container d-flex flex-row border-bottom justify-content-between col-sm text-decoration-none"
-    :to="`/recipeDetail?id=${recipe.id}`">
+    :to="`/recipeDetail?id=${recipe.id}`"
+  >
 
-<!--    need to be rewrited for final implementation-->
-    <img class="img-fluid w-25" :src="`http://localhost:1337${this.photoUrl}`"/>
+    <img class="img-fluid w-25" :src="photoUrl"/>
     <div>{{recipe.attributes.title}} </div>
     <div>{{recipe.attributes.difficulty}}</div>
     <div>{{recipe.attributes.timeToPrepare}} min.</div>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import * as placeholderImg from '@/assets/placeholder-image.png'
+
 export default {
   name: "RecipeRow",
   props: {
@@ -24,13 +26,18 @@ export default {
       photoUrl: null
     }
   },
-  created() {
-    try {
-      this.photoUrl = this.recipe.attributes.photo.data[0].attributes.url
-    } catch {
-      // this.photoUrl = 'default'
+  methods: {
+    renderImage() {
+      try {
+        const imagePath = this.recipe.attributes.photo.data[0].attributes.url
+        this.photoUrl =  `http://localhost:1337${imagePath}`
+      } catch {
+        this.photoUrl = placeholderImg
+      }
     }
-
+  },
+  created() {
+    this.renderImage()
   }
 }
 </script>
