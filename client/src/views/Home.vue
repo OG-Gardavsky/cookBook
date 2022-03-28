@@ -7,13 +7,15 @@
       <b-button @click="getRecipes">Button</b-button>
     </div>
 
-    <div class="">
-      <b-form-select class="custom-select" v-model="selectedCategories" :options="categories" @change="console.log('je to tam')"/>
-    </div>
+
 
 
 
     <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
+      <div class="">
+        <b-form-select class="custom-select" v-model="selectedCategory" :options="categories" @change=""/>
+      </div>
+
       <RecipeList :recipes="recipes"/>
     </b-overlay>
 
@@ -25,6 +27,7 @@ import TopBar from "@/components/Topbar";
 import axios from "axios";
 import RecipeRow from "@/components/RecipeRow";
 import RecipeList from "@/components/RecipeList";
+import qs from "qs";
 export default {
   name: 'Home',
   components: {
@@ -36,15 +39,47 @@ export default {
     return {
       recipes: [],
       busy: false,
-      categories: ['asia', 'italian'],
-      selectedCategories: []
+      categories: [],
+      selectedCategory: null
     }
   },
   methods: {
     async getRecipes() {
       try {
         this.busy = true
-        const res = await axios.get('/api/recipes?populate=*')
+        console.log(this.selectedCategory)
+
+
+
+        // const query = qs.stringify({
+        //   populate: '*',
+        //   filters: {
+        //     category: {
+        //       $eq: this.selectedCategory
+        //     },
+        //   },
+        // }, {
+        //   encodeValuesOnly: true,
+        // });
+
+        const query = qs.stringify({
+            filters: {
+              category: {
+                name: {
+                  $eq: this.selectedCategory,
+                }
+              },
+            }
+
+        }, {
+          encodeValuesOnly: true,
+        });
+
+
+        console.log(query)
+
+
+        const res = await axios.get(`/api/recipes?populate=*&${query}` )
         this.recipes = res.data.data
         this.busy = false
 
@@ -61,7 +96,8 @@ export default {
         this.categories = res.data.data.map(category => {
           return {
             text: category.attributes.name,
-            value: category.id}
+            value: category.attributes.name
+          }
         })
 
         this.busy = false
