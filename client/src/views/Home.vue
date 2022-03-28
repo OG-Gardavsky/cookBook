@@ -3,18 +3,18 @@
     <TopBar />
     <h1 class="m-5 border-bottom  p-2">Cook book for 42nd century</h1>
 
-    <div>
-      <b-button @click="getRecipes">Button</b-button>
-    </div>
 
-
+    <h2>Filters</h2>
     <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
-      <div class="">
-        <b-form-select class="custom-select" v-model="selectedCategory" :options="categories" @change="getRecipes"/>
-        <b-form-select class="custom-select" v-model="selectedDifficulty" :options="dificulties" @change="getRecipes"/>
+
+      <div class="container d-flex flex-row">
+        <b-form-select class="form-select m-2" v-model="selectedCategory" :options="categories" @change="getRecipes"/>
+        <b-form-select class="form-select m-2" v-model="selectedDifficulty" :options="dificulties" @change="getRecipes"/>
+        <b-button class="m-2" @click="resetFilter">reset</b-button>
       </div>
 
-      <RecipeList :recipes="recipes"/>
+      <RecipeList :recipes="recipes" />
+
     </b-overlay>
 
   </div>
@@ -51,6 +51,11 @@ export default {
     }
   },
   methods: {
+    resetFilter() {
+      this.selectedDifficulty = null
+      this.selectedCategory = null
+      this.getRecipes()
+    },
     async getRecipes() {
       try {
         this.busy = true

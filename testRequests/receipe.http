@@ -1,1 +1,6 @@
-GET http://localhost:1337/api/recipes?populate=*
+# GET http://localhost:1337/api/recipes?populate=*
+
+
+
+GET  http://localhost:1337/api/recipes?&populate=%2A&filters[difficulty][$eq]=1 HTTP/1.1
+
