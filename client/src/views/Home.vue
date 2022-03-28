@@ -8,12 +8,10 @@
     </div>
 
 
-
-
-
     <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
       <div class="">
-        <b-form-select class="custom-select" v-model="selectedCategory" :options="categories" @change=""/>
+        <b-form-select class="custom-select" v-model="selectedCategory" :options="categories" @change="getRecipes"/>
+        <b-form-select class="custom-select" v-model="selectedDifficulty" :options="dificulties" @change="getRecipes"/>
       </div>
 
       <RecipeList :recipes="recipes"/>
@@ -40,46 +38,25 @@ export default {
       recipes: [],
       busy: false,
       categories: [],
-      selectedCategory: null
+      selectedCategory: null,
+      selectedDifficulty: null,
+      dificulties: [
+        {text: '-', value: null},
+        {text: 1, value: 1},
+        {text: 2, value: 2},
+        {text: 3, value: 3},
+        {text: 4, value: 4},
+        {text: 5, value: 5},
+      ]
     }
   },
   methods: {
     async getRecipes() {
       try {
         this.busy = true
-        console.log(this.selectedCategory)
 
-
-
-        // const query = qs.stringify({
-        //   populate: '*',
-        //   filters: {
-        //     category: {
-        //       $eq: this.selectedCategory
-        //     },
-        //   },
-        // }, {
-        //   encodeValuesOnly: true,
-        // });
-
-        const query = qs.stringify({
-            filters: {
-              category: {
-                name: {
-                  $eq: this.selectedCategory,
-                }
-              },
-            }
-
-        }, {
-          encodeValuesOnly: true,
-        });
-
-
-        console.log(query)
-
-
-        const res = await axios.get(`/api/recipes?populate=*&${query}` )
+        const query = this.getQuery()
+        const res = await axios.get(`/api/recipes?&${query}` )
         this.recipes = res.data.data
         this.busy = false
 
@@ -100,12 +77,43 @@ export default {
           }
         })
 
+        this.categories.unshift({text: '-', value: null})
+
         this.busy = false
 
       } catch (err) {
         this.categories = null;
         this.busy = false;
       }
+    },
+    getQuery() {
+      const filters = {
+        category: {
+          name: {
+            $eq: this.selectedCategory,
+          }
+        },
+        difficulty: {
+          $eq: this.selectedDifficulty,
+        },
+      }
+
+      if (!this.selectedCategory) {
+        delete filters['category']
+      }
+
+      if (!this.selectedDifficulty) {
+        delete filters['difficulty']
+      }
+
+      const query = qs.stringify({
+        populate: '*',
+        filters
+      }, {
+        encodeValuesOnly: true,
+      })
+
+      return query
     }
   },
   created() {
