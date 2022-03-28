@@ -4,7 +4,7 @@
         <img class="img-fluid" :src="photoUrl"/>
     </td>
     <td>{{recipe.attributes.title}}</td>
-    <td>italian</td>
+    <td>{{ recipe.attributes.category.data.attributes.name }}</td>
     <td>{{recipe.attributes.difficulty}}</td>
     <td>{{recipe.attributes.timeToPrepare}} min.</td>
   </tr>
@@ -38,6 +38,7 @@ export default {
   },
   created() {
     this.renderImage()
+    console.log(this.recipe)
   }
 }
 </script>
