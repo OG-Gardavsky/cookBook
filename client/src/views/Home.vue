@@ -8,12 +8,11 @@
     </div>
 
 
-    <b-overlay
-        :show="busy"
-        opacity="0.6"
-        spinner-variant="secondary"
-    >
-      <recipe-row v-for="recipe in recipes" :recipe="recipe"/>
+    <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
+
+      <RecipeList :recipes="recipes"/>
+
+
 
     </b-overlay>
 
@@ -24,9 +23,11 @@
 import TopBar from "@/components/Topbar";
 import axios from "axios";
 import RecipeRow from "@/components/RecipeRow";
+import RecipeList from "@/components/RecipeList";
 export default {
   name: 'Home',
   components: {
+    RecipeList,
     RecipeRow,
     TopBar
   },
