@@ -1,12 +1,12 @@
 <template>
   <tr @click="goToDetail">
-    <td class="col-4">
-        <img class="img-fluid col-5 w-25" :src="photoUrl"/>
+    <td class="col-2">
+        <img class="img-fluid" :src="photoUrl"/>
     </td>
+    <td>{{recipe.attributes.title}}</td>
     <td>italian</td>
-    <td class="col-4">{{recipe.attributes.title}}</td>
-    <td >{{recipe.attributes.difficulty}}</td>
-    <td class="col-4">{{recipe.attributes.timeToPrepare}} min.</td>
+    <td>{{recipe.attributes.difficulty}}</td>
+    <td>{{recipe.attributes.timeToPrepare}} min.</td>
   </tr>
 </template>
 
