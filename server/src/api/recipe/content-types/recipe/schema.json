@@ -40,17 +40,6 @@
       "target": "api::tool.tool",
       "inversedBy": "recipes"
     },
-    "difficulty": {
-      "type": "enumeration",
-      "enum": [
-        " 1",
-        " 2",
-        " 3",
-        " 4",
-        " 5"
-      ],
-      "pluginOptions": {}
-    },
     "ingredients": {
       "type": "relation",
       "relation": "manyToMany",
@@ -68,6 +57,11 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "recipes"
+    },
+    "difficulty": {
+      "type": "integer",
+      "max": 5,
+      "min": 1
     }
   }
 }
