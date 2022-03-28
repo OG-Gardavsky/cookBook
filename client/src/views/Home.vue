@@ -7,13 +7,14 @@
       <b-button @click="getRecipes">Button</b-button>
     </div>
 
+    <div class="">
+      <b-form-select class="custom-select" v-model="selectedCategories" :options="categories" @change="console.log('je to tam')"/>
+    </div>
+
+
 
     <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
-
       <RecipeList :recipes="recipes"/>
-
-
-
     </b-overlay>
 
   </div>
@@ -34,7 +35,9 @@ export default {
   data() {
     return {
       recipes: [],
-      busy: false
+      busy: false,
+      categories: ['asia', 'italian'],
+      selectedCategories: []
     }
   },
   methods: {
@@ -47,11 +50,31 @@ export default {
 
       } catch(err) {
         console.log(err)
+        this.busy = false
+      }
+    },
+    async getCategories(){
+      try {
+        this.busy = true
+
+        const res = await axios.get('/api/categories')
+        this.categories = res.data.data.map(category => {
+          return {
+            text: category.attributes.name,
+            value: category.id}
+        })
+
+        this.busy = false
+
+      } catch (err) {
+        this.categories = null;
+        this.busy = false;
       }
     }
   },
   created() {
     this.getRecipes()
+    this.getCategories()
   }
 }
 </script>

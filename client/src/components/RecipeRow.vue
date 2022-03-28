@@ -38,7 +38,6 @@ export default {
   },
   created() {
     this.renderImage()
-    console.log(this.recipe)
   }
 }
 </script>
