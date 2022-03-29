@@ -1,19 +1,29 @@
 <template>
   <div>
     <top-bar />
-    <h1>{{recipe.attributes.title}}</h1>
+
+    <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
+
+      <recipe-header :title="recipe.attributes.title" />
+
+
+
+    </b-overlay>
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import TopBar from "@/components/Topbar";
+import RecipeHeader from "@/components/RecipeDetail/RecipeHeader";
 
 export default {
   name: "RecipeDetail",
-  components: {TopBar},
+  components: {RecipeHeader, TopBar},
   data() {
     return{
+      busy: false,
       id: null,
       recipe: null
     }
@@ -21,17 +31,20 @@ export default {
   methods: {
     async getRecipe() {
       try {
+        this.busy = true
         const res = await axios.get(`/api/recipes/${this.id}`)
         this.recipe = res.data.data
+        this.busy = false
 
       } catch(err) {
         console.log(err)
       }
     }
   },
-  created() {
+  async created() {
     this.id = this.$route.query.id
-    this.getRecipe()
+    await this.getRecipe()
+    console.log('recipe', this.recipe)
   }
 }
 </script>

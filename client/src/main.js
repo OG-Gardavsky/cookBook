@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-import { faBowlRice, faUtensils } from '@fortawesome/free-solid-svg-icons'
+import { faBowlRice, faUtensils, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add({ faBowlRice, faUtensils })
+library.add({ faBowlRice, faUtensils, faArrowLeft })
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(library)
