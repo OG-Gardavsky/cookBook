@@ -7,13 +7,10 @@
       <recipe-header :title="recipe.attributes.title" />
 
       <div class="container d-flex flex-column">
-
         <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" />
         <recipe-ingredients-tools :ingredients="ingredients" :tools="tools"/>
-        <recipe-directions />
-
+        <recipe-directions :directions="recipe.attributes.directions" />
       </div>
-
 
     </b-overlay>
 
@@ -76,7 +73,6 @@ export default {
       this.ingredients = this.recipe.attributes.ingredients.data.map(ingredient => ingredient.attributes.name)
     },
     parseTools() {
-      console.log( this.recipe.attributes.tools.data)
       this.tools = this.recipe.attributes.tools.data.map(tool => tool.attributes.name)
     }
   },
@@ -87,8 +83,6 @@ export default {
     this.getNumberOfLikes()
     this.parseIngrediets()
     this.parseTools()
-    console.log(this.tools)
-    console.log(this.ingredients)
 
   }
 }
