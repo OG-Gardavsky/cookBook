@@ -4,9 +4,8 @@
 
     <b-overlay :show="busy" opacity="0.6" spinner-variant="secondary">
 
-      <recipe-header :title="recipe.attributes.title" />
-
-      <div class="container d-flex flex-column">
+      <recipe-header  v-if="recipe" :title="recipe.attributes.title" />
+      <div v-if="recipe" class="container d-flex flex-column">
         <recipe-base-info
             :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" :is-like-active="isLikeActive"
             @on-heartPress="addLike"
@@ -14,6 +13,8 @@
         <recipe-ingredients-tools :ingredients="ingredients" :tools="tools"/>
         <recipe-directions :directions="recipe.attributes.directions" />
       </div>
+
+      <h1 v-if="displayNoDataError"> sorry, data was not loaded</h1>
 
     </b-overlay>
 
@@ -43,6 +44,7 @@ export default {
       isLikeActive: false,
       ingredients: null,
       tools: null,
+      displayNoDataError: false
     }
   },
   methods: {
@@ -110,8 +112,10 @@ export default {
       }
 
       const isAlreadyLiked =  JSON.parse(savedLikesVal).find(like => like === this.recipe.id)
-      console.log(isAlreadyLiked)
       this.isLikeActive = !isAlreadyLiked
+    },
+    setDisplayNoDataError() {
+      this.displayNoDataError = !this.recipe
     }
   },
   async created() {
@@ -122,6 +126,7 @@ export default {
     this.parseIngrediets()
     this.parseTools()
     this.setIsLikeActive()
+    this.setDisplayNoDataError()
 
   }
 }
