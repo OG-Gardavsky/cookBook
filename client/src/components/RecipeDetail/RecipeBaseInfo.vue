@@ -22,7 +22,7 @@
       <div class="m-2">
         <font-awesome-icon icon="fa-solid fa-heart" @click="addLike" />
         {{ numberOfLikes }}
-        <b-button class="mx-2" @click="addLike">
+        <b-button v-if="isLikeActive" class="mx-2" @click="addLike">
           <font-awesome-icon icon="fa-solid fa-plus" />
         </b-button>
 
@@ -44,7 +44,8 @@ export default {
   props: {
     numberOfLikes: 0,
     recipe: null,
-    photoUrl: null
+    photoUrl: null,
+    isLikeActive: Boolean
   },
   methods: {
     addLike() {
