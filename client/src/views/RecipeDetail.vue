@@ -9,7 +9,7 @@
       <div class="container d-flex flex-column">
 
         <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" />
-        <recipe-ingredients-tools />
+        <recipe-ingredients-tools :ingredients="ingredients" :tools="tools"/>
         <recipe-directions />
 
       </div>
@@ -39,6 +39,8 @@ export default {
       recipe: null,
       photoUrl: null,
       numberOfLikes: 0,
+      ingredients: null,
+      tools: null
     }
   },
   methods: {
@@ -69,8 +71,13 @@ export default {
       } catch {
         this.numberOfLikes = 0
       }
-
-
+    },
+    parseIngrediets() {
+      this.ingredients = this.recipe.attributes.ingredients.data.map(ingredient => ingredient.attributes.name)
+    },
+    parseTools() {
+      console.log( this.recipe.attributes.tools.data)
+      this.tools = this.recipe.attributes.tools.data.map(tool => tool.attributes.name)
     }
   },
   async created() {
@@ -78,11 +85,11 @@ export default {
     await this.getRecipe()
     this.getImageUrl()
     this.getNumberOfLikes()
+    this.parseIngrediets()
+    this.parseTools()
+    console.log(this.tools)
+    console.log(this.ingredients)
 
   }
 }
 </script>
-
-<style scoped>
-
-</style>
