@@ -9,7 +9,7 @@
 
       <div class="container d-flex flex-row">
         <b-form-select class="form-select m-2" v-model="selectedCategory" :options="categories" @change="getRecipes"/>
-        <b-form-select class="form-select m-2" v-model="selectedDifficulty" :options="dificulties" @change="getRecipes"/>
+        <b-form-select class="form-select m-2" v-model="selectedDifficulty" :options="difficulties" @change="getRecipes"/>
         <b-button class="m-2" @click="resetFilter">reset</b-button>
       </div>
 
@@ -40,8 +40,8 @@ export default {
       categories: [],
       selectedCategory: null,
       selectedDifficulty: null,
-      dificulties: [
-        {text: '-', value: null},
+      difficulties: [
+        {text: 'All difficulties', value: null},
         {text: 1, value: 1},
         {text: 2, value: 2},
         {text: 3, value: 3},
@@ -82,7 +82,7 @@ export default {
           }
         })
 
-        this.categories.unshift({text: '-', value: null})
+        this.categories.unshift({text: 'All categories', value: null})
 
         this.busy = false
 
