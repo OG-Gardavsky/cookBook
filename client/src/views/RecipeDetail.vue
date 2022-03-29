@@ -7,7 +7,10 @@
       <recipe-header :title="recipe.attributes.title" />
 
       <div class="container d-flex flex-column">
-        <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" @on-heartPress="addLike" />
+        <recipe-base-info
+            :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" :is-like-active="isLikeActive"
+            @on-heartPress="addLike"
+        />
         <recipe-ingredients-tools :ingredients="ingredients" :tools="tools"/>
         <recipe-directions :directions="recipe.attributes.directions" />
       </div>
@@ -36,8 +39,10 @@ export default {
       recipe: null,
       photoUrl: null,
       numberOfLikes: 0,
+      localStorageLikeKey: 'LIKES',
+      isLikeActive: false,
       ingredients: null,
-      tools: null
+      tools: null,
     }
   },
   methods: {
@@ -83,11 +88,30 @@ export default {
           }
         })
 
+        this.saveLikeToLocalStorage()
+
         await this.getRecipe()
         this.getNumberOfLikes()
+        this.setIsLikeActive()
 
       } catch {}
+    },
+    saveLikeToLocalStorage() {
+      const savedLikesVal = localStorage.getItem(this.localStorageLikeKey)
+      const savedLikes = savedLikesVal ?  JSON.parse(savedLikesVal) : []
+      savedLikes.push(this.recipe.id)
+      localStorage.setItem(this.localStorageLikeKey, JSON.stringify(savedLikes));
+    },
+    setIsLikeActive() {
+      const savedLikesVal = localStorage.getItem(this.localStorageLikeKey)
+      if (!savedLikesVal) {
+        this.isLikeActive = true
+        return
+      }
 
+      const isAlreadyLiked =  JSON.parse(savedLikesVal).find(like => like === this.recipe.id)
+      console.log(isAlreadyLiked)
+      this.isLikeActive = !isAlreadyLiked
     }
   },
   async created() {
@@ -97,6 +121,7 @@ export default {
     this.getNumberOfLikes()
     this.parseIngrediets()
     this.parseTools()
+    this.setIsLikeActive()
 
   }
 }
