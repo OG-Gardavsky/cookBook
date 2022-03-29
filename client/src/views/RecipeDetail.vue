@@ -9,9 +9,10 @@
       <div class="container d-flex flex-column">
 
         <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" />
+        <recipe-ingredients-tools />
+        <recipe-directions />
 
       </div>
-
 
 
     </b-overlay>
@@ -25,10 +26,12 @@ import TopBar from "@/components/Topbar";
 import RecipeHeader from "@/components/RecipeDetail/RecipeHeader";
 import * as placeholderImg from "@/assets/placeholder-image.png";
 import RecipeBaseInfo from "@/components/RecipeDetail/RecipeBaseInfo";
+import RecipeIngredientsTools from "@/components/RecipeDetail/RecipeIngredientsTools";
+import RecipeDirections from "@/components/RecipeDetail/RecipeDirections";
 
 export default {
   name: "RecipeDetail",
-  components: {RecipeBaseInfo, RecipeHeader, TopBar},
+  components: {RecipeDirections, RecipeIngredientsTools, RecipeBaseInfo, RecipeHeader, TopBar},
   data() {
     return{
       busy: false,

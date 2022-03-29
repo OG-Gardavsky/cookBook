@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex flex-row">
-    <b-img rounded class="img-fluid w-50" :src="photoUrl"/>
+  <div class="d-flex flex-row border-bottom">
+    <b-img rounded class="img-fluid w-50 m-2" :src="photoUrl"/>
 
-    <div class=" d-flex flex-column ms-3 border-start ">
+    <div class=" d-flex flex-column ms-3 my-2 border-start ">
 
       <div class="m-2  justify-content-start justify-content-start">
         <font-awesome-icon icon="fa-solid fa-globe" />
@@ -24,12 +24,12 @@
         {{ numberOfLikes }}
       </div>
 
-
       <div class="m-2">
         <font-awesome-icon icon="fa-solid fa-user" />
         <!--              TODO fill author from db-->
         testing user
       </div>
+
     </div>
   </div>
 </template>
