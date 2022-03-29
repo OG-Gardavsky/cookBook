@@ -14,7 +14,7 @@
         <recipe-directions :directions="recipe.attributes.directions" />
       </div>
 
-      <h1 v-if="displayNoDataError"> sorry, data was not loaded</h1>
+      <NoData v-if="!recipe" />
 
     </b-overlay>
 
@@ -29,10 +29,11 @@ import * as placeholderImg from "@/assets/placeholder-image.png";
 import RecipeBaseInfo from "@/components/RecipeDetail/RecipeBaseInfo";
 import RecipeIngredientsTools from "@/components/RecipeDetail/RecipeIngredientsTools";
 import RecipeDirections from "@/components/RecipeDetail/RecipeDirections";
+import NoData from "@/components/NoData";
 
 export default {
   name: "RecipeDetail",
-  components: {RecipeDirections, RecipeIngredientsTools, RecipeBaseInfo, RecipeHeader, TopBar},
+  components: {NoData, RecipeDirections, RecipeIngredientsTools, RecipeBaseInfo, RecipeHeader, TopBar},
   data() {
     return{
       busy: false,
@@ -43,8 +44,7 @@ export default {
       localStorageLikeKey: 'LIKES',
       isLikeActive: false,
       ingredients: null,
-      tools: null,
-      displayNoDataError: false
+      tools: null
     }
   },
   methods: {
@@ -113,9 +113,6 @@ export default {
 
       const isAlreadyLiked =  JSON.parse(savedLikesVal).find(like => like === this.recipe.id)
       this.isLikeActive = !isAlreadyLiked
-    },
-    setDisplayNoDataError() {
-      this.displayNoDataError = !this.recipe
     }
   },
   async created() {
@@ -126,7 +123,6 @@ export default {
     this.parseIngrediets()
     this.parseTools()
     this.setIsLikeActive()
-    this.setDisplayNoDataError()
 
   }
 }
