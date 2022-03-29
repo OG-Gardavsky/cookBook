@@ -20,8 +20,12 @@
       </div>
 
       <div class="m-2">
-        <font-awesome-icon icon="fa-solid fa-heart" />
+        <font-awesome-icon icon="fa-solid fa-heart" @click="addLike" />
         {{ numberOfLikes }}
+        <b-button class="mx-2" @click="addLike">
+          <font-awesome-icon icon="fa-solid fa-plus" />
+        </b-button>
+
       </div>
 
       <div class="m-2">
@@ -36,11 +40,16 @@
 
 <script>
 export default {
+  name: "RecipeBaseInfo",
   props: {
     numberOfLikes: 0,
     recipe: null,
     photoUrl: null
   },
-  name: "RecipeBaseInfo"
+  methods: {
+    addLike() {
+      this.$emit('on-heartPress');
+    }
+  }
 }
 </script>

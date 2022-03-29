@@ -7,7 +7,7 @@
       <recipe-header :title="recipe.attributes.title" />
 
       <div class="container d-flex flex-column">
-        <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" />
+        <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" @on-heartPress="addLike" />
         <recipe-ingredients-tools :ingredients="ingredients" :tools="tools"/>
         <recipe-directions :directions="recipe.attributes.directions" />
       </div>
@@ -74,6 +74,9 @@ export default {
     },
     parseTools() {
       this.tools = this.recipe.attributes.tools.data.map(tool => tool.attributes.name)
+    },
+    async addLike() {
+      
     }
   },
   async created() {
