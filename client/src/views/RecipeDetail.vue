@@ -76,7 +76,18 @@ export default {
       this.tools = this.recipe.attributes.tools.data.map(tool => tool.attributes.name)
     },
     async addLike() {
-      
+      try {
+        await axios.post('/api/likes', {
+          data: {
+            recipe: this.recipe.id
+          }
+        })
+
+        await this.getRecipe()
+        this.getNumberOfLikes()
+
+      } catch {}
+
     }
   },
   async created() {
