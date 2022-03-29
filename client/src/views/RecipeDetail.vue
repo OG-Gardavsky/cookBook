@@ -6,6 +6,12 @@
 
       <recipe-header :title="recipe.attributes.title" />
 
+      <div class="container d-flex flex-column">
+
+        <recipe-base-info :recipe="recipe" :number-of-likes="numberOfLikes" :photo-url="photoUrl" />
+
+      </div>
+
 
 
     </b-overlay>
@@ -17,34 +23,59 @@
 import axios from "axios";
 import TopBar from "@/components/Topbar";
 import RecipeHeader from "@/components/RecipeDetail/RecipeHeader";
+import * as placeholderImg from "@/assets/placeholder-image.png";
+import RecipeBaseInfo from "@/components/RecipeDetail/RecipeBaseInfo";
 
 export default {
   name: "RecipeDetail",
-  components: {RecipeHeader, TopBar},
+  components: {RecipeBaseInfo, RecipeHeader, TopBar},
   data() {
     return{
       busy: false,
       id: null,
-      recipe: null
+      recipe: null,
+      photoUrl: null,
+      numberOfLikes: 0,
     }
   },
   methods: {
     async getRecipe() {
       try {
         this.busy = true
-        const res = await axios.get(`/api/recipes/${this.id}`)
+        const res = await axios.get(`/api/recipes/${this.id}?populate=*`)
         this.recipe = res.data.data
         this.busy = false
 
       } catch(err) {
+        //TODO display Blank message that recipe cannot be loaded
         console.log(err)
+        this.busy = false
       }
+    },
+    getImageUrl() {
+      try {
+        const imagePath = this.recipe.attributes.photo.data[0].attributes.url
+        this.photoUrl =  `http://localhost:1337${imagePath}`
+      } catch {
+        this.photoUrl = placeholderImg
+      }
+    },
+    getNumberOfLikes() {
+      try {
+        this.numberOfLikes = this.recipe.attributes.likes.data.length
+      } catch {
+        this.numberOfLikes = 0
+      }
+
+
     }
   },
   async created() {
     this.id = this.$route.query.id
     await this.getRecipe()
-    console.log('recipe', this.recipe)
+    this.getImageUrl()
+    this.getNumberOfLikes()
+
   }
 }
 </script>
