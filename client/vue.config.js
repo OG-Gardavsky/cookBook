@@ -7,6 +7,11 @@ module.exports = {
                 changeOrigin: true,
                 logLevel: 'debug',
             },
+            '^/uploads': {
+                target: 'http://localhost:1337',
+                changeOrigin: true,
+                logLevel: 'debug',
+            },
         },
     },
 }
