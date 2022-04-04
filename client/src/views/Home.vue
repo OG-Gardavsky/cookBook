@@ -14,7 +14,7 @@
           <b-form-select class="form-select m-2" v-model="selectedDifficulty" :options="difficulties" @change="getRecipes"/>
           <b-button class="m-2" @click="resetFilter">reset</b-button>
         </div>
-        <RecipeList :recipes="recipes" />
+        <RecipeList v-if="recipes !== null" :recipes="recipes" />
       </div>
 
 
@@ -67,6 +67,7 @@ export default {
     async getRecipes() {
       try {
         this.busy = true
+        this.recipes = null
 
         const query = this.getQuery()
         const res = await axios.get(`/api/recipes?&${query}` )
@@ -74,7 +75,7 @@ export default {
         this.busy = false
 
       } catch(err) {
-        console.log(err)
+        this.recipes = null
         this.busy = false
       }
     },
